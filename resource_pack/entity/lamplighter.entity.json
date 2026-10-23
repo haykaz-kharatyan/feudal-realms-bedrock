@@ -3,9 +3,15 @@
   "minecraft:client_entity": {
     "description": {
       "identifier": "feudal:lamplighter",
-      "materials": { "default": "entity_alphatest" },
-      "textures": { "default": "textures/entity/lamplighter" },
-      "geometry": { "default": "geometry.feudal_lamplighter" },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/lamplighter"
+      },
+      "geometry": {
+        "default": "geometry.feudal_lamplighter"
+      },
       "animations": {
         "humanoid_base_pose": "animation.humanoid.base_pose",
         "look_at_target": "animation.humanoid.look_at_target.default",
@@ -13,12 +19,22 @@
         "riding.arms": "animation.humanoid.riding.arms",
         "riding.legs": "animation.humanoid.riding.legs"
       },
-      "animation_controllers": [
-        { "look_at_target": "controller.animation.humanoid.look_at_target" },
-        { "move": "controller.animation.humanoid.move" },
-        { "riding": "controller.animation.humanoid.riding" }
-      ],
-      "render_controllers": [ "controller.render.default" ]
+      "scripts": {
+        "animate": [
+          "humanoid_base_pose",
+          "look_at_target",
+          "move",
+          {
+            "riding.arms": "query.is_riding"
+          },
+          {
+            "riding.legs": "query.is_riding"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ]
     }
   }
 }

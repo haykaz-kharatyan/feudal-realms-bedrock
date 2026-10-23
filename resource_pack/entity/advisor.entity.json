@@ -4,24 +4,32 @@
     "description": {
       "identifier": "feudal:advisor",
       "materials": {
-        "default": "villager"
+        "default": "entity_alphatest"
       },
       "textures": {
         "default": "textures/entity/advisor"
       },
       "geometry": {
-        "default": "geometry.villager_v2"
+        "default": "geometry.feudal_advisor"
       },
       "animations": {
-        "look_at_target": "animation.common.look_at_target",
-        "move": "animation.villager.move",
-        "general": "animation.villager.general"
+        "humanoid_base_pose": "animation.humanoid.base_pose",
+        "look_at_target": "animation.humanoid.look_at_target.default",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs"
       },
       "scripts": {
         "animate": [
-          "general",
-          { "look_at_target": "query.is_alive" },
-          { "move": "query.modified_move_speed" }
+          "humanoid_base_pose",
+          "look_at_target",
+          "move",
+          {
+            "riding.arms": "query.is_riding"
+          },
+          {
+            "riding.legs": "query.is_riding"
+          }
         ]
       },
       "render_controllers": [
