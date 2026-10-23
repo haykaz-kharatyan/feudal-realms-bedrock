@@ -1,25 +1,24 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const archiver = require("archiver");
 
 console.log("==========================================");
 console.log("Building and Packaging Feudal Realms Addon");
 console.log("==========================================\n");
 
 // 1. Build scripts
-console.log("[1/4] Compiling TypeScript scripts...");
+console.log("[1/3] Compiling TypeScript scripts...");
 execSync("node build.js", { stdio: "inherit" });
 
-// 2. Generate textures
-console.log("\n[2/4] Generating pixel-art textures & icons...");
-execSync("node generate_textures.js", { stdio: "inherit" });
-
-// 3. Validate
-console.log("\n[3/4] Validating Bedrock schemas...");
+// 2. Validate
+console.log("\n[2/3] Validating Bedrock schemas...");
 execSync("node validate_addon.js", { stdio: "inherit" });
 
-// 4. Create packages
-console.log("\n[4/4] Creating distribution archives (.mcaddon & .mcpack)...");
+// 3. Create packages with archiver (guaranteed forward-slashes and valid zip headers)
+console.log("\n[3/3] Creating distribution archives (.mcpack & .mcaddon)...");
 
 const outDir = path.resolve(".");
 const mcaddonPath = path.join(outDir, "feudal_realms.mcaddon");
@@ -31,27 +30,84 @@ for (const f of [mcaddonPath, bpPackPath, rpPackPath]) {
   if (fs.existsSync(f)) fs.unlinkSync(f);
 }
 
-// 4a. Package combined .mcaddon
-execSync(
-  `powershell -Command "Compress-Archive -Path 'behavior_pack', 'resource_pack' -DestinationPath 'temp_addon.zip' -Force; Move-Item -Path 'temp_addon.zip' -Destination 'feudal_realms.mcaddon' -Force"`,
-  { stdio: "inherit" }
-);
-console.log(`  [Created] ${mcaddonPath}`);
+function zipDirectory(sourceDir, outPath, filterFn) {
+  return new Promise((resolve, reject) => {
+    const output = fs.createWriteStream(outPath);
+    const archive = new archiver.ZipArchive({ zlib: { level: 9 } });
 
-// 4b. Package behavior_pack .mcpack
-execSync(
-  `powershell -Command "Compress-Archive -Path 'behavior_pack\\*' -DestinationPath 'temp_bp.zip' -Force; Move-Item -Path 'temp_bp.zip' -Destination 'feudal_realms_bp.mcpack' -Force"`,
-  { stdio: "inherit" }
-);
-console.log(`  [Created] ${bpPackPath}`);
+    output.on("close", () => {
+      console.log(`  [Created] ${outPath} (${archive.pointer()} bytes)`);
+      resolve();
+    });
+    archive.on("error", (err) => reject(err));
 
-// 4c. Package resource_pack .mcpack
-execSync(
-  `powershell -Command "Compress-Archive -Path 'resource_pack\\*' -DestinationPath 'temp_rp.zip' -Force; Move-Item -Path 'temp_rp.zip' -Destination 'feudal_realms_rp.mcpack' -Force"`,
-  { stdio: "inherit" }
-);
-console.log(`  [Created] ${rpPackPath}`);
+    archive.pipe(output);
 
-console.log("\n==========================================");
-console.log("SUCCESS! All Bedrock packages are ready for Android/Windows import.");
-console.log("==========================================");
+    function addDirRecursive(currentDir, relativePrefix = "") {
+      const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(currentDir, entry.name);
+        const relPath = relativePrefix ? `${relativePrefix}/${entry.name}` : entry.name;
+        if (filterFn && !filterFn(fullPath, entry.name, relPath)) {
+          continue;
+        }
+        if (entry.isDirectory()) {
+          addDirRecursive(fullPath, relPath);
+        } else if (entry.isFile()) {
+          archive.file(fullPath, { name: relPath.replace(/\\/g, "/") });
+        }
+      }
+    }
+
+    addDirRecursive(sourceDir);
+    archive.finalize();
+  });
+}
+
+function zipFiles(files, outPath) {
+  return new Promise((resolve, reject) => {
+    const output = fs.createWriteStream(outPath);
+    const archive = new archiver.ZipArchive({ zlib: { level: 9 } });
+
+    output.on("close", () => {
+      console.log(`  [Created] ${outPath} (${archive.pointer()} bytes)`);
+      resolve();
+    });
+    archive.on("error", (err) => reject(err));
+
+    archive.pipe(output);
+    for (const f of files) {
+      archive.file(f.source, { name: f.name.replace(/\\/g, "/") });
+    }
+    archive.finalize();
+  });
+}
+
+async function run() {
+  // 3a. Pack Behavior Pack (exclude .ts source files, only include main.js)
+  await zipDirectory("behavior_pack", bpPackPath, (fullPath, name, relPath) => {
+    if (name.endsWith(".ts")) return false;
+    return true;
+  });
+
+  // 3b. Pack Resource Pack
+  await zipDirectory("resource_pack", rpPackPath);
+
+  // 3c. Pack combined .mcaddon containing the two .mcpack files
+  await zipFiles(
+    [
+      { source: bpPackPath, name: "feudal_realms_bp.mcpack" },
+      { source: rpPackPath, name: "feudal_realms_rp.mcpack" }
+    ],
+    mcaddonPath
+  );
+
+  console.log("\n==========================================");
+  console.log("SUCCESS! All Bedrock packages are compliant with Minecraft standards.");
+  console.log("==========================================");
+}
+
+run().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

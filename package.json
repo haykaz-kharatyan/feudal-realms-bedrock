@@ -20,6 +20,7 @@
   "devDependencies": {
     "@minecraft/server": "^1.11.0",
     "@minecraft/server-ui": "^1.2.0",
+    "archiver": "^8.0.0",
     "esbuild": "^0.28.2",
     "typescript": "^7.0.2"
   }
