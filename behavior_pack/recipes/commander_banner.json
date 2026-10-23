@@ -1,0 +1,23 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "feudal:commander_banner_recipe"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [
+      " G ",
+      " R ",
+      " S "
+    ],
+    "key": {
+      "G": { "item": "minecraft:gold_ingot" },
+      "R": { "item": "minecraft:red_wool" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "result": {
+      "item": "feudal:commander_banner",
+      "count": 1
+    }
+  }
+}

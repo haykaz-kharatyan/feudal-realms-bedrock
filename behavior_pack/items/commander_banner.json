@@ -1,0 +1,19 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "feudal:commander_banner",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "feudal_commander_banner",
+      "minecraft:max_stack_size": 1,
+      "minecraft:display_name": {
+        "value": "item.feudal.commander_banner.name"
+      },
+      "minecraft:hand_equipped": true
+    }
+  }
+}

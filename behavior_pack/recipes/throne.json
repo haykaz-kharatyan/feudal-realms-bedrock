@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "feudal:throne_recipe"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [
+      " G ",
+      "CRC",
+      "PPP"
+    ],
+    "key": {
+      "G": { "item": "minecraft:gold_ingot" },
+      "C": { "item": "minecraft:cobblestone" },
+      "R": { "item": "minecraft:red_carpet" },
+      "P": { "item": "minecraft:planks" }
+    },
+    "result": {
+      "item": "feudal:throne",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.feudal_catapult",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 3.8,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [0, 2, 0]
+      },
+      "bones": [
+        { "name": "root", "pivot": [0, 0, 0] },
+        {
+          "name": "base_chassis",
+          "parent": "root",
+          "pivot": [0, 4, 0],
+          "cubes": [
+            { "origin": [-14, 4, -20], "size": [28, 4, 40], "uv": [0, 0] },
+            { "origin": [-12, 8, -2], "size": [4, 24, 4], "uv": [0, 44] },
+            { "origin": [8, 8, -2], "size": [4, 24, 4], "uv": [0, 44] },
+            { "origin": [-12, 28, -2], "size": [24, 4, 4], "uv": [16, 44] },
+            { "origin": [-16, 0, -16], "size": [3, 8, 8], "uv": [72, 44] },
+            { "origin": [13, 0, -16], "size": [3, 8, 8], "uv": [72, 44] },
+            { "origin": [-16, 0, 8], "size": [3, 8, 8], "uv": [72, 44] },
+            { "origin": [13, 0, 8], "size": [3, 8, 8], "uv": [72, 44] }
+          ]
+        },
+        {
+          "name": "throw_arm",
+          "parent": "base_chassis",
+          "pivot": [0, 30, 0],
+          "cubes": [
+            { "origin": [-2, 28, -28], "size": [4, 4, 44], "uv": [0, 72] },
+            { "origin": [-6, 26, 12], "size": [12, 8, 8], "uv": [52, 72] },
+            { "origin": [-5, 30, -32], "size": [10, 5, 8], "uv": [0, 92] }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "feudal:merchant",
+      "materials": { "default": "entity_alphatest" },
+      "textures": { "default": "textures/entity/merchant" },
+      "geometry": { "default": "geometry.feudal_merchant" },
+      "animations": {
+        "humanoid_base_pose": "animation.humanoid.base_pose",
+        "look_at_target": "animation.humanoid.look_at_target.default",
+        "move": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms",
+        "riding.legs": "animation.humanoid.riding.legs"
+      },
+      "animation_controllers": [
+        { "look_at_target": "controller.animation.humanoid.look_at_target" },
+        { "move": "controller.animation.humanoid.move" },
+        { "riding": "controller.animation.humanoid.riding" }
+      ],
+      "render_controllers": [ "controller.render.default" ]
+    }
+  }
+}

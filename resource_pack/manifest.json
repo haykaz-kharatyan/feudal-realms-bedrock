@@ -1,0 +1,22 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Feudal Realms RP",
+    "description": "Ресурсы, геральдика и 3D-модели для Feudal Realms",
+    "uuid": "d3caeffc-49e3-4fce-9831-6931a51f4a45",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 20, 80]
+  },
+  "metadata": {
+    "authors": ["fastexmany"],
+    "license": "All Rights Reserved",
+    "url": "fastexmany@gmail.com"
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "e44f303e-bcd9-452e-bc6c-308456880cf0",
+      "version": [1, 0, 0]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "resource_pack_name": "feudal_realms",
+  "texture_name": "atlas.terrain",
+  "texture_data": {
+    "feudal_throne": {
+      "textures": "textures/blocks/throne"
+    },
+    "feudal_boundary_stone": {
+      "textures": "textures/blocks/boundary_stone"
+    }
+  }
+}

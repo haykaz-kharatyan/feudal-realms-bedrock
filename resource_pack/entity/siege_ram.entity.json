@@ -1,0 +1,15 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "feudal:siege_ram",
+      "materials": { "default": "entity_alphatest" },
+      "textures": { "default": "textures/entity/siege_ram" },
+      "geometry": { "default": "geometry.feudal_siege_ram" },
+      "animations": {
+        "move": "animation.minecart.move"
+      },
+      "render_controllers": [ "controller.render.default" ]
+    }
+  }
+}

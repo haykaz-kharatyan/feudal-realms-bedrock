@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "feudal:realm_map_recipe"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [
+      " P ",
+      "PCP",
+      " P "
+    ],
+    "key": {
+      "P": { "item": "minecraft:paper" },
+      "C": { "item": "minecraft:compass" }
+    },
+    "result": {
+      "item": "feudal:realm_map",
+      "count": 1
+    }
+  }
+}

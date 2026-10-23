@@ -1,0 +1,43 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Feudal Realms BP",
+    "description": "Автономные королевства, феодальные войны и эволюция поселений",
+    "uuid": "a8f3b210-9c24-4f51-b8d2-432109876543",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 20, 80]
+  },
+  "metadata": {
+    "authors": ["fastexmany"],
+    "license": "All Rights Reserved",
+    "url": "fastexmany@gmail.com"
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "b9e4c321-0d35-4a62-c9e3-543210987654",
+      "version": [1, 0, 0]
+    },
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "c0f5d432-1e46-4b73-ada4-654321098765",
+      "entry": "scripts/main.js",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.11.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.2.0"
+    },
+    {
+      "uuid": "d3caeffc-49e3-4fce-9831-6931a51f4a45",
+      "version": [1, 0, 0]
+    }
+  ]
+}

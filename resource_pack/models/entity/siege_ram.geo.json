@@ -1,0 +1,44 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.feudal_siege_ram",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 3.5,
+        "visible_bounds_height": 3,
+        "visible_bounds_offset": [0, 1.5, 0]
+      },
+      "bones": [
+        { "name": "root", "pivot": [0, 0, 0] },
+        {
+          "name": "chassis",
+          "parent": "root",
+          "pivot": [0, 4, 0],
+          "cubes": [
+            { "origin": [-12, 4, -20], "size": [24, 4, 40], "uv": [0, 0] },
+            { "origin": [-11, 8, -19], "size": [2, 20, 2], "uv": [0, 44] },
+            { "origin": [9, 8, -19], "size": [2, 20, 2], "uv": [0, 44] },
+            { "origin": [-11, 8, 17], "size": [2, 20, 2], "uv": [0, 44] },
+            { "origin": [9, 8, 17], "size": [2, 20, 2], "uv": [0, 44] },
+            { "origin": [-12, 28, -21], "size": [24, 4, 42], "uv": [0, 44] },
+            { "origin": [-13, 0, -18], "size": [2, 8, 8], "uv": [88, 0] },
+            { "origin": [11, 0, -18], "size": [2, 8, 8], "uv": [88, 0] },
+            { "origin": [-13, 0, 10], "size": [2, 8, 8], "uv": [88, 0] },
+            { "origin": [11, 0, 10], "size": [2, 8, 8], "uv": [88, 0] }
+          ]
+        },
+        {
+          "name": "ram_log",
+          "parent": "chassis",
+          "pivot": [0, 16, 0],
+          "cubes": [
+            { "origin": [-4, 12, -26], "size": [8, 8, 48], "uv": [0, 90] },
+            { "origin": [-5, 11, -30], "size": [10, 10, 4], "uv": [64, 90] }
+          ]
+        }
+      ]
+    }
+  ]
+}

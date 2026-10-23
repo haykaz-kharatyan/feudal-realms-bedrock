@@ -1,0 +1,18 @@
+{
+  "resource_pack_name": "feudal_realms",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "feudal_bandit_head": {
+      "textures": "textures/items/bandit_head"
+    },
+    "feudal_realm_map": {
+      "textures": "textures/items/realm_map"
+    },
+    "feudal_war_horn": {
+      "textures": "textures/items/war_horn"
+    },
+    "feudal_commander_banner": {
+      "textures": "textures/items/commander_banner"
+    }
+  }
+}

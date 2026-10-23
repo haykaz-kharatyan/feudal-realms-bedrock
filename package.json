@@ -1,0 +1,26 @@
+{
+  "name": "feudal-realms-addon",
+  "version": "1.0.0",
+  "description": "Feudal Realms addon for Minecraft Bedrock Edition",
+  "main": "behavior_pack/scripts/main.js",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "node build.js",
+    "package": "node package.js"
+  },
+  "keywords": [
+    "minecraft",
+    "bedrock",
+    "addon",
+    "feudal-realms"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "devDependencies": {
+    "@minecraft/server": "^1.11.0",
+    "@minecraft/server-ui": "^1.2.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "feudal:ballista",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": ["feudal", "siege_weapon", "defense", "inanimate"]
+      },
+      "minecraft:health": { "value": 80, "max": 80 },
+      "minecraft:damage_sensor": { "triggers": { "cause": "all", "deals_damage": true } },
+      "minecraft:collision_box": { "width": 1.5, "height": 1.8 },
+      "minecraft:movement": { "value": 0.0 },
+      "minecraft:physics": { "has_gravity": true, "has_collision": true },
+      "minecraft:pushable": { "is_pushable": false, "is_pushable_by_piston": false },
+      "minecraft:shooter": {
+        "def": "minecraft:arrow"
+      },
+      "minecraft:behavior.ranged_attack": {
+        "priority": 1,
+        "attack_interval_min": 2.0,
+        "attack_interval_max": 3.5,
+        "attack_radius": 32.0
+      },
+      "minecraft:behavior.nearest_attackable_target": {
+        "priority": 2,
+        "entity_types": [
+          { "filters": { "test": "is_family", "subject": "other", "value": "bandit" }, "max_dist": 32 },
+          { "filters": { "test": "is_family", "subject": "other", "value": "monster" }, "max_dist": 28 },
+          { "filters": { "test": "is_family", "subject": "other", "value": "siege" }, "max_dist": 36 }
+        ],
+        "must_see": true
+      }
+    }
+  }
+}
