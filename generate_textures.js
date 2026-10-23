@@ -598,3 +598,55 @@ savePng("resource_pack/textures/entity/royal_knight.png", 64, 64, (x, y) => {
   if (x === 23 || x === 24) return [235, 195, 35, 255]; // gold inlay
   return [150, 155, 165, 255]; // gothic steel plate
 });
+
+// 24. Throne 2D Inventory Icon (16x16)
+savePng("resource_pack/textures/items/throne_icon.png", 16, 16, (x, y) => {
+  if (x === 0 || x === 15 || y === 0 || y === 15) return [0, 0, 0, 0];
+  // Gold crown crest on backrest
+  if (y <= 3 && x >= 4 && x <= 11) {
+    if ((x === 4 || x === 7 || x === 8 || x === 11) && y === 1) return [255, 235, 120, 255];
+    if (y === 2 && (x === 7 || x === 8)) return [220, 40, 40, 255]; // ruby
+    return [245, 195, 35, 255];
+  }
+  // Backrest royal red velvet with gold border
+  if (y >= 4 && y <= 8 && x >= 3 && x <= 12) {
+    if (x === 3 || x === 12 || y === 4) return [240, 190, 30, 255]; // gold trim
+    if (x >= 5 && x <= 10) return [175, 25, 45, 255]; // velvet
+    return [230, 180, 25, 255];
+  }
+  // Armrests
+  if (y === 9 && (x === 2 || x === 3 || x === 12 || x === 13)) return [240, 190, 30, 255];
+  // Seat cushion
+  if (y === 10 && x >= 3 && x <= 12) return [185, 25, 45, 255];
+  // Stone / gold base and legs
+  if (y >= 11 && y <= 14) {
+    if (x === 2 || x === 3 || x === 12 || x === 13) return [130, 135, 145, 255]; // legs
+    if (y === 11) return [230, 180, 25, 255]; // seat base
+    if (y === 14 && x >= 4 && x <= 11) return [160, 165, 175, 255]; // dais footrest
+  }
+  return [0, 0, 0, 0];
+});
+
+// 25. Boundary Stone 2D Inventory Icon (16x16)
+savePng("resource_pack/textures/items/boundary_stone_icon.png", 16, 16, (x, y) => {
+  if (x === 0 || x === 15 || y === 0 || y === 15) return [0, 0, 0, 0];
+  // Chiseled stone pillar shape (x: 4..11, y: 1..14)
+  if (x >= 4 && x <= 11 && y >= 1 && y <= 14) {
+    // Obelisk pointed cap
+    if (y === 1 && (x === 7 || x === 8)) return [180, 185, 195, 255];
+    if (y === 2 && x >= 6 && x <= 9) return [160, 165, 175, 255];
+    // Heraldic crest shield in center of stone (y: 5..9, x: 5..10)
+    if (y >= 5 && y <= 9 && x >= 5 && x <= 10) {
+      if (x === 7 || x === 8 || y === 7) return [245, 205, 40, 255]; // gold cross
+      return [180, 30, 40, 255]; // crimson shield
+    }
+    // Chiseled stone brick texture
+    if ((x + y) % 3 === 0) return [130, 135, 140, 255];
+    return [155, 160, 165, 255];
+  }
+  // Base pedestal
+  if (y >= 13 && y <= 14 && x >= 2 && x <= 13) {
+    return [120, 125, 130, 255];
+  }
+  return [0, 0, 0, 0];
+});

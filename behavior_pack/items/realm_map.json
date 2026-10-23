@@ -8,10 +8,14 @@
       }
     },
     "components": {
-      "minecraft:icon": "feudal_realm_map",
+      "minecraft:icon": {
+        "textures": {
+          "default": "feudal_realm_map"
+        }
+      },
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.feudal.realm_map.name"
+        "value": "item.feudal:realm_map.name"
       },
       "minecraft:hand_equipped": true,
       "minecraft:foil": true

@@ -5,33 +5,75 @@
       "identifier": "feudal:catapult",
       "is_spawnable": true,
       "is_summonable": true,
-      "is_experimental": false
+      "is_experimental": false,
+      "spawn_egg": {
+        "base_color": "#451a03",
+        "overlay_color": "#94a3b8"
+      }
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["feudal", "siege_weapon", "offensive", "inanimate"]
+        "family": [
+          "feudal",
+          "siege_weapon",
+          "offensive",
+          "inanimate"
+        ]
       },
-      "minecraft:health": { "value": 120, "max": 120 },
-      "minecraft:damage_sensor": { "triggers": { "cause": "all", "deals_damage": true } },
-      "minecraft:collision_box": { "width": 2.2, "height": 2.5 },
-      "minecraft:movement": { "value": 0.12 },
-      "minecraft:navigation.walk": { "can_path_over_water": false, "avoid_water": true },
+      "minecraft:health": {
+        "value": 120,
+        "max": 120
+      },
+      "minecraft:damage_sensor": {
+        "triggers": {
+          "cause": "all",
+          "deals_damage": true
+        }
+      },
+      "minecraft:collision_box": {
+        "width": 2.2,
+        "height": 2.5
+      },
+      "minecraft:movement": {
+        "value": 0.12
+      },
+      "minecraft:navigation.walk": {
+        "can_path_over_water": false,
+        "avoid_water": true
+      },
       "minecraft:movement.basic": {},
-      "minecraft:physics": { "has_gravity": true, "has_collision": true },
+      "minecraft:physics": {
+        "has_gravity": true,
+        "has_collision": true
+      },
       "minecraft:shooter": {
         "def": "minecraft:fireball"
       },
       "minecraft:behavior.ranged_attack": {
         "priority": 1,
-        "attack_interval_min": 4.0,
-        "attack_interval_max": 6.0,
-        "attack_radius": 48.0
+        "attack_interval_min": 4,
+        "attack_interval_max": 6,
+        "attack_radius": 48
       },
       "minecraft:behavior.nearest_attackable_target": {
         "priority": 2,
         "entity_types": [
-          { "filters": { "test": "is_family", "subject": "other", "value": "guard" }, "max_dist": 48 },
-          { "filters": { "test": "is_family", "subject": "other", "value": "defense" }, "max_dist": 48 }
+          {
+            "filters": {
+              "test": "is_family",
+              "subject": "other",
+              "value": "guard"
+            },
+            "max_dist": 48
+          },
+          {
+            "filters": {
+              "test": "is_family",
+              "subject": "other",
+              "value": "defense"
+            },
+            "max_dist": 48
+          }
         ],
         "must_see": false
       }

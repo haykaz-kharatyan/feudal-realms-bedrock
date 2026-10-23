@@ -101,6 +101,47 @@ export class BuildingEngine {
           } catch (e) {
             block.setPermutation(BlockPermutation.resolve("minecraft:cobblestone"));
           }
+
+          // Anti-floating foundation: If this is a base or floor block, fill down to solid ground
+          if (b.relY <= 0) {
+            for (let down = 1; down <= 16; down++) {
+              try {
+                const under = dim.getBlock({ x: targetPos.x, y: targetPos.y - down, z: targetPos.z });
+                if (!under) break;
+                if (
+                  under.isAir ||
+                  under.isLiquid ||
+                  under.typeId.includes("leaves") ||
+                  under.typeId.includes("flower") ||
+                  under.typeId.includes("grass") ||
+                  under.typeId.includes("plant") ||
+                  under.typeId.includes("vine")
+                ) {
+                  under.setPermutation(BlockPermutation.resolve("minecraft:cobblestone"));
+                } else {
+                  break; // Reached solid stone, dirt, bedrock
+                }
+              } catch {}
+            }
+
+            // Clear vegetation/trees above floor so buildings never have trees growing through them
+            for (let up = 1; up <= 16; up++) {
+              try {
+                const above = dim.getBlock({ x: targetPos.x, y: targetPos.y + up, z: targetPos.z });
+                if (
+                  above &&
+                  (above.typeId.includes("log") ||
+                    above.typeId.includes("leaves") ||
+                    above.typeId.includes("flower") ||
+                    above.typeId.includes("grass") ||
+                    above.typeId.includes("vine") ||
+                    above.typeId.includes("snow"))
+                ) {
+                  above.setPermutation(BlockPermutation.resolve("minecraft:air"));
+                }
+              } catch {}
+            }
+          }
         }
 
         task.currentBlockIndex++;

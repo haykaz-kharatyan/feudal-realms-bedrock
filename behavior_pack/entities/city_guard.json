@@ -5,7 +5,11 @@
       "identifier": "feudal:city_guard",
       "is_spawnable": true,
       "is_summonable": true,
-      "is_experimental": false
+      "is_experimental": false,
+      "spawn_egg": {
+        "base_color": "#991b1b",
+        "overlay_color": "#cbd5e1"
+      }
     },
     "component_groups": {
       "feudal:fleeing": {
@@ -28,7 +32,12 @@
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["feudal", "guard", "mob", "player_friendly"]
+        "family": [
+          "feudal",
+          "guard",
+          "mob",
+          "player_friendly"
+        ]
       },
       "minecraft:health": {
         "value": 40,
@@ -97,7 +106,7 @@
       },
       "minecraft:behavior.look_at_player": {
         "priority": 6,
-        "look_distance": 8.0
+        "look_distance": 8
       },
       "minecraft:behavior.random_look_around": {
         "priority": 7
@@ -110,12 +119,16 @@
     "events": {
       "feudal:flee_to_home": {
         "add": {
-          "component_groups": ["feudal:fleeing"]
+          "component_groups": [
+            "feudal:fleeing"
+          ]
         }
       },
       "feudal:defend_cargo": {
         "add": {
-          "component_groups": ["feudal:alerted"]
+          "component_groups": [
+            "feudal:alerted"
+          ]
         }
       }
     }

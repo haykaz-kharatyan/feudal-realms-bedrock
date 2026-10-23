@@ -1,5 +1,5 @@
 // behavior_pack/scripts/main.ts
-import { world as world20, system as system3 } from "@minecraft/server";
+import { world as world22, system as system3, ItemStack as ItemStack4 } from "@minecraft/server";
 
 // behavior_pack/scripts/AdvisorUI.ts
 import { ItemStack as ItemStack3 } from "@minecraft/server";
@@ -192,6 +192,29 @@ var BuildingEngine = class {
             block.setPermutation(BlockPermutation.resolve(b.blockType));
           } catch (e) {
             block.setPermutation(BlockPermutation.resolve("minecraft:cobblestone"));
+          }
+          if (b.relY <= 0) {
+            for (let down = 1; down <= 16; down++) {
+              try {
+                const under = dim.getBlock({ x: targetPos.x, y: targetPos.y - down, z: targetPos.z });
+                if (!under) break;
+                if (under.isAir || under.isLiquid || under.typeId.includes("leaves") || under.typeId.includes("flower") || under.typeId.includes("grass") || under.typeId.includes("plant") || under.typeId.includes("vine")) {
+                  under.setPermutation(BlockPermutation.resolve("minecraft:cobblestone"));
+                } else {
+                  break;
+                }
+              } catch {
+              }
+            }
+            for (let up = 1; up <= 16; up++) {
+              try {
+                const above = dim.getBlock({ x: targetPos.x, y: targetPos.y + up, z: targetPos.z });
+                if (above && (above.typeId.includes("log") || above.typeId.includes("leaves") || above.typeId.includes("flower") || above.typeId.includes("grass") || above.typeId.includes("vine") || above.typeId.includes("snow"))) {
+                  above.setPermutation(BlockPermutation.resolve("minecraft:air"));
+                }
+              } catch {
+              }
+            }
           }
         }
         task.currentBlockIndex++;
@@ -581,6 +604,34 @@ var CastleArchitectureEngine = class {
       bp.push({ relX: dx, relY: 2, relZ: -21, blockType: "minecraft:iron_bars" });
       bp.push({ relX: dx, relY: 3, relZ: -21, blockType: "minecraft:stone_bricks" });
     }
+    for (let x = -palR; x <= palR; x++) {
+      for (let z = -palR; z <= palR; z++) {
+        const isSpireArea = Math.abs(x) >= palR - 2 && Math.abs(z) >= palR - 2;
+        if (!isSpireArea) {
+          bp.push({ relX: x, relY: palH, relZ: z, blockType: "minecraft:stone_bricks" });
+        }
+      }
+    }
+    for (let layer = 1; layer <= 5; layer++) {
+      const rx = palR - layer * 4;
+      if (rx < 3) break;
+      for (let z = -palR + 2; z <= palR - 2; z++) {
+        bp.push({ relX: -rx, relY: palH + layer, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        bp.push({ relX: rx, relY: palH + layer, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          if (layer === 5 || Math.abs(ix) <= 2) {
+            bp.push({ relX: ix, relY: palH + layer, relZ: z, blockType: "minecraft:spruce_planks" });
+          }
+        }
+      }
+    }
+    for (let cx = -3; cx <= 3; cx++) {
+      for (let cz = -3; cz <= 3; cz++) {
+        bp.push({ relX: cx, relY: palH + 6, relZ: cz, blockType: "minecraft:glass" });
+        bp.push({ relX: cx, relY: palH + 7, relZ: cz, blockType: "minecraft:gold_block" });
+      }
+    }
+    bp.push({ relX: 0, relY: palH + 8, relZ: 0, blockType: "minecraft:sea_lantern" });
     return bp;
   }
   // --- Other Tiers (Ducal, Baron, Town Hall, Longhouse) ---
@@ -622,6 +673,29 @@ var CastleArchitectureEngine = class {
       bp.push({ relX: -1, relY: 1, relZ: z, blockType: "minecraft:yellow_carpet" });
       bp.push({ relX: 1, relY: 1, relZ: z, blockType: "minecraft:yellow_carpet" });
     }
+    for (let x = -r; x <= r; x++) {
+      for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: h, relZ: z, blockType: "minecraft:stone_bricks" });
+        if (x === -r || x === r || z === -r || z === r) {
+          if ((x + z) % 2 === 0) {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:stone_bricks" });
+            bp.push({ relX: x, relY: h + 2, relZ: z, blockType: "minecraft:stone_brick_slab" });
+          } else {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:cobblestone_wall" });
+          }
+        }
+      }
+    }
+    for (let step = 1; step <= 4; step++) {
+      const rx = r - 2 - step * 2;
+      for (let z = -r + 2; z <= r - 2; z++) {
+        bp.push({ relX: -rx, relY: h + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        bp.push({ relX: rx, relY: h + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          bp.push({ relX: ix, relY: h + step, relZ: z, blockType: "minecraft:spruce_planks" });
+        }
+      }
+    }
     return bp;
   }
   static generateBaronKeep() {
@@ -651,6 +725,28 @@ var CastleArchitectureEngine = class {
     for (let z = r - 1; z >= -3; z--) {
       bp.push({ relX: 0, relY: 1, relZ: z, blockType: "minecraft:red_carpet" });
     }
+    for (let x = -r; x <= r; x++) {
+      for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: h, relZ: z, blockType: "minecraft:spruce_planks" });
+        if (x === -r || x === r || z === -r || z === r) {
+          if ((x + z) % 2 === 0) {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:stone_bricks" });
+          } else {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:spruce_fence" });
+          }
+        }
+      }
+    }
+    for (let ty = 1; ty <= 3; ty++) {
+      const cr = 5 - ty;
+      for (let cx = -cr; cx <= cr; cx++) {
+        for (let cz = -cr; cz <= cr; cz++) {
+          bp.push({ relX: cx, relY: h + ty, relZ: cz, blockType: "minecraft:dark_oak_stairs" });
+        }
+      }
+    }
+    bp.push({ relX: 0, relY: h + 4, relZ: 0, blockType: "minecraft:gold_block" });
+    bp.push({ relX: 0, relY: h + 5, relZ: 0, blockType: "minecraft:lantern" });
     return bp;
   }
   static generateVillageTownHall() {
@@ -658,6 +754,7 @@ var CastleArchitectureEngine = class {
     const r = 6;
     for (let x = -r; x <= r; x++) {
       for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: -1, relZ: z, blockType: "minecraft:cobblestone" });
         bp.push({ relX: x, relY: 0, relZ: z, blockType: "minecraft:stone_bricks" });
       }
     }
@@ -673,6 +770,28 @@ var CastleArchitectureEngine = class {
     }
     bp.push({ relX: 0, relY: 1, relZ: -3, blockType: "minecraft:chiseled_stone_bricks" });
     bp.push({ relX: 0, relY: 2, relZ: -3, blockType: "feudal:throne" });
+    for (let x = -r; x <= r; x++) {
+      for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: 6, relZ: z, blockType: "minecraft:spruce_planks" });
+      }
+    }
+    for (let step = 0; step <= 3; step++) {
+      const rx = r + 1 - step * 2;
+      for (let z = -r - 1; z <= r + 1; z++) {
+        bp.push({ relX: -rx, relY: 7 + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        bp.push({ relX: rx, relY: 7 + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          bp.push({ relX: ix, relY: 7 + step, relZ: z, blockType: "minecraft:spruce_planks" });
+        }
+      }
+    }
+    for (let cy = 7; cy <= 12; cy++) {
+      bp.push({ relX: 4, relY: cy, relZ: -3, blockType: "minecraft:stone_bricks" });
+    }
+    bp.push({ relX: 4, relY: 13, relZ: -3, blockType: "minecraft:campfire" });
+    bp.push({ relX: 4, relY: 14, relZ: -3, blockType: "minecraft:cobblestone_wall" });
+    bp.push({ relX: 0, relY: 5, relZ: 0, blockType: "minecraft:spruce_fence" });
+    bp.push({ relX: 0, relY: 4, relZ: 0, blockType: "minecraft:lantern" });
     return bp;
   }
   static generateChieftainLonghouse() {
@@ -680,6 +799,7 @@ var CastleArchitectureEngine = class {
     const r = 4;
     for (let x = -r; x <= r; x++) {
       for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: -1, relZ: z, blockType: "minecraft:cobblestone" });
         bp.push({ relX: x, relY: 0, relZ: z, blockType: "minecraft:spruce_planks" });
       }
     }
@@ -694,6 +814,20 @@ var CastleArchitectureEngine = class {
       }
     }
     bp.push({ relX: 0, relY: 1, relZ: -2, blockType: "feudal:throne" });
+    for (let step = 0; step <= 2; step++) {
+      const rx = r + 1 - step * 2;
+      for (let z = -r - 1; z <= r + 1; z++) {
+        bp.push({ relX: -rx, relY: 5 + step, relZ: z, blockType: "minecraft:spruce_stairs" });
+        bp.push({ relX: rx, relY: 5 + step, relZ: z, blockType: "minecraft:spruce_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          bp.push({ relX: ix, relY: 5 + step, relZ: z, blockType: "minecraft:spruce_planks" });
+        }
+      }
+    }
+    for (let z = -r - 1; z <= r + 1; z++) {
+      bp.push({ relX: 0, relY: 8, relZ: z, blockType: "minecraft:spruce_slab" });
+    }
+    bp.push({ relX: 0, relY: 4, relZ: 0, blockType: "minecraft:lantern" });
     return bp;
   }
   /**
@@ -3104,6 +3238,167 @@ var NavalEngine = class {
 };
 NavalEngine.activeVoyages = /* @__PURE__ */ new Map();
 
+// behavior_pack/scripts/HUDCompass.ts
+import { world as world20 } from "@minecraft/server";
+var HUDCompass = class {
+  /**
+   * Calculates the directional arrow based on player view rotation (yaw) and target position.
+   */
+  static getDirectionArrow(player, targetX, targetZ) {
+    const dx = targetX - player.location.x;
+    const dz = targetZ - player.location.z;
+    const angleToTarget = Math.atan2(-dx, dz) * 180 / Math.PI;
+    const playerYaw = player.getRotation().y;
+    let diff = angleToTarget - playerYaw;
+    while (diff < -180) diff += 360;
+    while (diff > 180) diff -= 360;
+    if (diff >= -22.5 && diff <= 22.5) return "\u2B06 \u0412\u043F\u0435\u0440\u0435\u0434\u0438";
+    if (diff > 22.5 && diff <= 67.5) return "\u2197 \u0412\u043F\u0435\u0440\u0435\u0434\u0438-\u0441\u043F\u0440\u0430\u0432\u0430";
+    if (diff > 67.5 && diff <= 112.5) return "\u27A1 \u0421\u043F\u0440\u0430\u0432\u0430";
+    if (diff > 112.5 && diff <= 157.5) return "\u2198 \u0421\u0437\u0430\u0434\u0438-\u0441\u043F\u0440\u0430\u0432\u0430";
+    if (diff > 157.5 || diff < -157.5) return "\u2B07 \u0421\u0437\u0430\u0434\u0438";
+    if (diff >= -157.5 && diff < -112.5) return "\u2199 \u0421\u0437\u0430\u0434\u0438-\u0441\u043B\u0435\u0432\u0430";
+    if (diff >= -112.5 && diff < -67.5) return "\u2B05 \u0421\u043B\u0435\u0432\u0430";
+    return "\u2196 \u0412\u043F\u0435\u0440\u0435\u0434\u0438-\u0441\u043B\u0435\u0432\u0430";
+  }
+  /**
+   * Ticks the on-screen actionbar HUD compass for all players.
+   */
+  static tick(activeSettlements2) {
+    if (activeSettlements2.size === 0) return;
+    for (const player of world20.getPlayers()) {
+      let nearestSettlement = null;
+      let minDistance = Infinity;
+      for (const s of activeSettlements2.values()) {
+        if (s.dimensionId !== player.dimension.id) continue;
+        const dx = s.throneLocation.x - player.location.x;
+        const dz = s.throneLocation.z - player.location.z;
+        const dist = Math.sqrt(dx * dx + dz * dz);
+        if (dist < minDistance) {
+          minDistance = dist;
+          nearestSettlement = s;
+        }
+      }
+      if (!nearestSettlement) continue;
+      const distInt = Math.floor(minDistance);
+      const faction = FactionManager.getFaction(nearestSettlement.factionId);
+      const name = faction?.name ?? "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u043E";
+      const tx = Math.floor(nearestSettlement.throneLocation.x);
+      const tz = Math.floor(nearestSettlement.throneLocation.z);
+      if (distInt <= 12) {
+        player.onScreenDisplay.setActionBar(
+          `\xA76\u{1F3F0} [\u0412\u041B\u0410\u0414\u0415\u041D\u0418\u042F: ${name.toUpperCase()}] \xA7e\u0412\u044B \u0443 \u0422\u0440\u043E\u043D\u0430! \u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u0421\u043E\u0432\u0435\u0442\u043D\u0438\u043A\u0430, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u0430\u0432\u0438\u0442\u044C \u0437\u0430\u043C\u043A\u043E\u043C\xA7r`
+        );
+      } else {
+        const arrow = this.getDirectionArrow(player, tx, tz);
+        player.onScreenDisplay.setActionBar(
+          `\xA76\u{1F9ED} [\u041A\u0410\u0420\u0422\u0410-\u041A\u041E\u041C\u041F\u0410\u0421] \xA7e${name} \xA77[${tx}, ${tz}] \xA76| \xA7a${distInt}\u043C \xA7e${arrow} \xA76| \xA7b\u0422\u0440\u043E\u043D \u043D\u0430\u0439\u0434\u0435\u043D\xA7r`
+        );
+      }
+    }
+  }
+};
+
+// behavior_pack/scripts/NaturalKingdomSpawner.ts
+import { world as world21, BlockPermutation as BlockPermutation5 } from "@minecraft/server";
+var NaturalKingdomSpawner = class {
+  /**
+   * Scans downward from y=120 to y=55 to find the real surface ground (not water, not leaves).
+   */
+  static findSurfaceY(dim, x, z) {
+    for (let y = 120; y >= 55; y--) {
+      try {
+        const block = dim.getBlock({ x, y, z });
+        if (!block || block.isAir || block.isLiquid) continue;
+        const type = block.typeId;
+        if (type.includes("grass") || type.includes("dirt") || type.includes("stone") || type.includes("sand") || type.includes("terracotta") || type.includes("podzol")) {
+          return y + 1;
+        }
+      } catch {
+      }
+    }
+    return null;
+  }
+  /**
+   * Automatically generates a living medieval settlement near the player if none exists.
+   */
+  static checkAndSpawnNaturalKingdom(player, activeSettlements2) {
+    for (const s of activeSettlements2.values()) {
+      const dx = s.throneLocation.x - player.location.x;
+      const dz = s.throneLocation.z - player.location.z;
+      const dist = Math.sqrt(dx * dx + dz * dz);
+      if (dist < 300) {
+        return;
+      }
+    }
+    const dim = player.dimension;
+    const targetX = Math.floor(player.location.x) + 40;
+    const targetZ = Math.floor(player.location.z) + 40;
+    const surfaceY = this.findSurfaceY(dim, targetX, targetZ);
+    if (surfaceY === null) return;
+    const thronePos = {
+      x: targetX,
+      y: surfaceY,
+      z: targetZ
+    };
+    try {
+      const throneBlock = dim.getBlock(thronePos);
+      if (throneBlock) {
+        throneBlock.setPermutation(BlockPermutation5.resolve("feudal:throne"));
+      }
+    } catch {
+    }
+    const newSettlement = {
+      factionId: "fact_kingdom_1",
+      tier: 2 /* Village */,
+      throneLocation: thronePos,
+      dimensionId: dim.id,
+      treasury: { wood: 500, stone: 300, iron: 80, emeralds: 90, food: 450 },
+      population: 180,
+      militaryCount: 45,
+      taxRatePercent: 10,
+      economicProfile: "\u0410\u0433\u0440\u0430\u0440\u043D\u0430\u044F \u0436\u0438\u0442\u043D\u0438\u0446\u0430" /* AgrarianBreadbasket */,
+      rulerTrait: "\u0411\u043B\u0430\u0433\u043E\u0440\u043E\u0434\u043D\u044B\u0439" /* Honorable */
+    };
+    activeSettlements2.set("fact_kingdom_1", newSettlement);
+    VirtualWorldEngine.registerSettlement(newSettlement);
+    VirtualWorldEngine.ensureTickingArea(newSettlement);
+    BorderManager.updateBordersForSettlement(newSettlement);
+    try {
+      const advisor = dim.spawnEntity("feudal:advisor", {
+        x: thronePos.x,
+        y: thronePos.y,
+        z: thronePos.z + 2
+      });
+      advisor.nameTag = `\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u043A\u0438\u0439 \u0421\u043E\u0432\u0435\u0442\u043D\u0438\u043A`;
+      const guard1 = dim.spawnEntity("feudal:city_guard", {
+        x: thronePos.x - 3,
+        y: thronePos.y,
+        z: thronePos.z + 2
+      });
+      guard1.nameTag = `\u0413\u0432\u0430\u0440\u0434\u0435\u0435\u0446 \u0422\u0440\u043E\u043D\u0430`;
+      const guard2 = dim.spawnEntity("feudal:city_guard", {
+        x: thronePos.x + 3,
+        y: thronePos.y,
+        z: thronePos.z + 2
+      });
+      guard2.nameTag = `\u0413\u0432\u0430\u0440\u0434\u0435\u0435\u0446 \u0422\u0440\u043E\u043D\u0430`;
+      const blacksmith = dim.spawnEntity("feudal:blacksmith", {
+        x: thronePos.x + 4,
+        y: thronePos.y,
+        z: thronePos.z - 3
+      });
+      blacksmith.nameTag = `\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u043A\u0438\u0439 \u041A\u0443\u0437\u043D\u0435\u0446`;
+    } catch {
+    }
+    CastleArchitectureEngine.constructOrUpgradeCastle(newSettlement);
+    world21.sendMessage(
+      `\xA76\xA7l[\u041A\u041E\u0420\u041E\u041B\u0415\u0412\u0421\u0422\u0412\u041E \u041E\u0411\u041D\u0410\u0420\u0423\u0416\u0415\u041D\u041E]\xA7r \xA7e\u0412\u043F\u0435\u0440\u0435\u0434\u0438 \u0440\u0430\u0441\u043A\u0438\u043D\u0443\u043B\u0438\u0441\u044C \u0432\u043B\u0430\u0434\u0435\u043D\u0438\u044F \u0441 \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u043A\u0438\u043C \u0422\u0440\u043E\u043D\u043E\u043C! \u041A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u044B: [${thronePos.x}, ${thronePos.y}, ${thronePos.z}]. \u0421\u043B\u0435\u0434\u0443\u0439\u0442\u0435 \u043F\u043E \u043A\u043E\u043C\u043F\u0430\u0441\u0443 \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435!\xA7r`
+    );
+  }
+};
+NaturalKingdomSpawner.hasCheckedInitialSpawn = false;
+
 // behavior_pack/scripts/main.ts
 VirtualWorldEngine.initializeDefaultRealms();
 AllianceSystem.initializeAlliances();
@@ -3132,16 +3427,24 @@ system3.runInterval(() => {
   NavalEngine.tick();
 }, 40);
 system3.runInterval(() => {
-  for (const player of world20.getPlayers()) {
+  for (const player of world22.getPlayers()) {
     VirtualWorldEngine.checkPlayerProximityAndMaterialize(player.location, player.dimension.id);
   }
 }, 40);
 system3.runInterval(() => {
-  for (const player of world20.getPlayers()) {
+  for (const player of world22.getPlayers()) {
     PlayerRPGProfile.applyHealthAndPassives(player);
   }
 }, 200);
-world20.afterEvents.itemUse.subscribe((event) => {
+system3.runInterval(() => {
+  HUDCompass.tick(activeSettlements);
+}, 20);
+system3.runInterval(() => {
+  for (const player of world22.getPlayers()) {
+    NaturalKingdomSpawner.checkAndSpawnNaturalKingdom(player, activeSettlements);
+  }
+}, 60);
+world22.afterEvents.itemUse.subscribe((event) => {
   const item = event.itemStack;
   const player = event.source;
   if (item.typeId === "feudal:realm_map") {
@@ -3154,7 +3457,7 @@ world20.afterEvents.itemUse.subscribe((event) => {
       SquadTacticsEngine.openTacticsMenu(player, town);
     });
   } else if (item.typeId === "feudal:war_horn") {
-    world20.sendMessage("\xA7c\xA7l[\u0411\u041E\u0415\u0412\u041E\u0419 \u0420\u041E\u0413] \u041F\u0440\u043E\u0437\u0432\u0443\u0447\u0430\u043B \u043F\u0440\u043E\u0442\u044F\u0436\u043D\u044B\u0439 \u0431\u043E\u0435\u0432\u043E\u0439 \u0441\u0438\u0433\u043D\u0430\u043B \u0442\u0440\u0435\u0432\u043E\u0433\u0438! \u0412\u043E\u0438\u043D\u044B, \u043A \u043E\u0440\u0443\u0436\u0438\u044E!\xA7r");
+    world22.sendMessage("\xA7c\xA7l[\u0411\u041E\u0415\u0412\u041E\u0419 \u0420\u041E\u0413] \u041F\u0440\u043E\u0437\u0432\u0443\u0447\u0430\u043B \u043F\u0440\u043E\u0442\u044F\u0436\u043D\u044B\u0439 \u0431\u043E\u0435\u0432\u043E\u0439 \u0441\u0438\u0433\u043D\u0430\u043B \u0442\u0440\u0435\u0432\u043E\u0433\u0438! \u0412\u043E\u0438\u043D\u044B, \u043A \u043E\u0440\u0443\u0436\u0438\u044E!\xA7r");
     try {
       player.dimension.spawnParticle("minecraft:sonic_explosion", {
         x: player.location.x,
@@ -3182,7 +3485,7 @@ function openAdvisor(player, target) {
   };
   AdvisorUI.openMainMenu(player, settlement);
 }
-var beforeEvents = world20.beforeEvents;
+var beforeEvents = world22.beforeEvents;
 if (beforeEvents.playerInteractWithEntity) {
   beforeEvents.playerInteractWithEntity.subscribe((event) => {
     const target = event.target;
@@ -3205,7 +3508,7 @@ if (beforeEvents.playerInteractWithEntity) {
     }
   });
 }
-var afterEvents = world20.afterEvents;
+var afterEvents = world22.afterEvents;
 if (afterEvents.playerInteractWithEntity) {
   afterEvents.playerInteractWithEntity.subscribe((event) => {
     const target = event.target;
@@ -3228,14 +3531,14 @@ if (afterEvents.playerInteractWithEntity) {
 if (afterEvents.dataDrivenEntityTrigger) {
   afterEvents.dataDrivenEntityTrigger.subscribe((event) => {
     if (event.id === "feudal:open_advisor_ui" && event.entity?.typeId === "feudal:advisor") {
-      const players = world20.getPlayers();
+      const players = world22.getPlayers();
       if (players.length > 0) {
         openAdvisor(players[0], event.entity);
       }
     }
   });
 }
-world20.afterEvents.entityHurt.subscribe((event) => {
+world22.afterEvents.entityHurt.subscribe((event) => {
   const hurtEntity = event.hurtEntity;
   const damageSource = event.damageSource;
   const damagingEntity = damageSource?.damagingEntity;
@@ -3249,20 +3552,41 @@ world20.afterEvents.entityHurt.subscribe((event) => {
     }
   }
 });
-world20.afterEvents.entityDie.subscribe((event) => {
+world22.afterEvents.entityDie.subscribe((event) => {
   PlayerRPGProfile.handleEntityKill(event);
 });
-var playerSpawnEvent = world20.afterEvents.playerSpawn;
+var playerSpawnEvent = world22.afterEvents.playerSpawn;
 if (playerSpawnEvent) {
   playerSpawnEvent.subscribe((event) => {
-    if (event.player) {
+    const player = event.player;
+    if (player) {
       system3.runTimeout(() => {
-        PlayerRPGProfile.applyHealthAndPassives(event.player);
+        PlayerRPGProfile.applyHealthAndPassives(player);
+        try {
+          const inv = player.getComponent("inventory")?.container;
+          if (inv) {
+            let hasMap = false;
+            for (let i = 0; i < inv.size; i++) {
+              const item = inv.getItem(i);
+              if (item?.typeId === "feudal:realm_map") {
+                hasMap = true;
+                break;
+              }
+            }
+            if (!hasMap) {
+              inv.addItem(new ItemStack4("feudal:realm_map", 1));
+              player.sendMessage(
+                "\xA76\xA7l[\u041A\u041E\u0420\u041E\u041B\u0415\u0412\u0421\u041A\u0418\u0419 \u041A\u0410\u0420\u0422\u041E\u0413\u0420\u0410\u0424]\xA7r \xA7e\u0412\u0430\u043C \u0434\u0430\u0440\u043E\u0432\u0430\u043D \u0410\u0442\u043B\u0430\u0441 \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432! \u0421\u043B\u0435\u0434\u0438\u0442\u0435 \u0437\u0430 \u043A\u043E\u043C\u043F\u0430\u0441\u043E\u043C \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435 \u2014 \u043E\u043D \u0443\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u043F\u0443\u0442\u044C \u043A \u0431\u043B\u0438\u0436\u0430\u0439\u0448\u0435\u043C\u0443 \u0437\u0430\u043C\u043A\u0443!\xA7r"
+              );
+            }
+          }
+        } catch {
+        }
       }, 20);
     }
   });
 }
-var blockPlaceEvent = world20.afterEvents.playerPlaceBlock;
+var blockPlaceEvent = world22.afterEvents.playerPlaceBlock;
 if (blockPlaceEvent) {
   blockPlaceEvent.subscribe((event) => {
     const block = event.block;
@@ -3294,7 +3618,7 @@ if (blockPlaceEvent) {
         advisor.nameTag = `\u0421\u043E\u0432\u0435\u0442\u043D\u0438\u043A \u043A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u0442\u0432\u0430 ${player.name}`;
       } catch {
       }
-      world20.sendMessage(
+      world22.sendMessage(
         `\xA76\xA7l[\u041A\u041E\u0420\u041E\u041B\u0415\u0412\u0421\u0422\u0412\u041E \u041E\u0421\u041D\u041E\u0412\u0410\u041D\u041E]\xA7r \xA7e${player.name} \u0432\u043E\u0437\u0434\u0432\u0438\u0433 \u043F\u0440\u0435\u0441\u0442\u043E\u043B \u043D\u0430 \u043A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u0430\u0445 [${loc.x}, ${loc.y}, ${loc.z}]! \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u043A\u0438\u0439 \u0421\u043E\u0432\u0435\u0442\u043D\u0438\u043A \u043F\u0440\u0438\u0431\u044B\u043B \u043A \u0432\u0430\u0448\u0435\u043C\u0443 \u0442\u0440\u043E\u043D\u0443. \u041F\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u0435 \u0441 \u043D\u0438\u043C, \u0447\u0442\u043E\u0431\u044B \u0432\u043E\u0437\u0432\u0435\u0441\u0442\u0438 \u0437\u0430\u043C\u043E\u043A!\xA7r`
       );
     }

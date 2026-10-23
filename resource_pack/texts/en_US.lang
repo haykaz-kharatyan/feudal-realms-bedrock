@@ -1,11 +1,17 @@
 item.feudal:bandit_head.name=Bandit Leader Trophy Head
+item.feudal.bandit_head.name=Bandit Leader Trophy Head
 item.feudal:realm_map.name=Atlas of the Realms
+item.feudal.realm_map.name=Atlas of the Realms
 item.feudal:war_horn.name=War Horn
+item.feudal.war_horn.name=War Horn
 item.feudal:commander_banner.name=Commander's Banner
 item.feudal.commander_banner.name=Commander's Banner
-item.feudal.war_horn.name=War Horn
-tile.feudal:throne.name=Settlement Throne
+
+tile.feudal:throne.name=Royal Throne
+tile.feudal.throne.name=Royal Throne
 tile.feudal:boundary_stone.name=Boundary Stone
+tile.feudal.boundary_stone.name=Boundary Stone
+
 entity.feudal:advisor.name=Royal Advisor
 entity.feudal:city_guard.name=City Guard
 entity.feudal:bandit_leader.name=Bandit Chieftain
@@ -22,4 +28,69 @@ entity.feudal:siege_ram.name=Siege Battering Ram
 entity.feudal:ballista.name=Defensive Wall Ballista
 entity.feudal:catapult.name=Siege Catapult
 entity.feudal:royal_knight.name=Royal Retinue Knight
+
+item.spawn_egg.entity.feudal:advisor.name=Spawn Royal Advisor
+item.spawn_egg.entity.feudal.advisor.name=Spawn Royal Advisor
+item.feudal:advisor_spawn_egg.name=Spawn Royal Advisor
+
+item.spawn_egg.entity.feudal:royal_knight.name=Spawn Royal Knight
+item.spawn_egg.entity.feudal.royal_knight.name=Spawn Royal Knight
+item.feudal:royal_knight_spawn_egg.name=Spawn Royal Knight
+
+item.spawn_egg.entity.feudal:city_guard.name=Spawn City Guard
+item.spawn_egg.entity.feudal.city_guard.name=Spawn City Guard
+item.feudal:city_guard_spawn_egg.name=Spawn City Guard
+
+item.spawn_egg.entity.feudal:bandit_leader.name=Spawn Bandit Chieftain
+item.spawn_egg.entity.feudal.bandit_leader.name=Spawn Bandit Chieftain
+item.feudal:bandit_leader_spawn_egg.name=Spawn Bandit Chieftain
+
+item.spawn_egg.entity.feudal:miner.name=Spawn Miner
+item.spawn_egg.entity.feudal.miner.name=Spawn Miner
+item.feudal:miner_spawn_egg.name=Spawn Miner
+
+item.spawn_egg.entity.feudal:lumberjack.name=Spawn Lumberjack
+item.spawn_egg.entity.feudal.lumberjack.name=Spawn Lumberjack
+item.feudal:lumberjack_spawn_egg.name=Spawn Lumberjack
+
+item.spawn_egg.entity.feudal:blacksmith.name=Spawn Blacksmith
+item.spawn_egg.entity.feudal.blacksmith.name=Spawn Blacksmith
+item.feudal:blacksmith_spawn_egg.name=Spawn Blacksmith
+
+item.spawn_egg.entity.feudal:merchant.name=Spawn Merchant
+item.spawn_egg.entity.feudal.merchant.name=Spawn Merchant
+item.feudal:merchant_spawn_egg.name=Spawn Merchant
+
+item.spawn_egg.entity.feudal:farmer.name=Spawn Farmer
+item.spawn_egg.entity.feudal.farmer.name=Spawn Farmer
+item.feudal:farmer_spawn_egg.name=Spawn Farmer
+
+item.spawn_egg.entity.feudal:lamplighter.name=Spawn Lamplighter
+item.spawn_egg.entity.feudal.lamplighter.name=Spawn Lamplighter
+item.feudal:lamplighter_spawn_egg.name=Spawn Lamplighter
+
+item.spawn_egg.entity.feudal:cartographer.name=Spawn Royal Cartographer
+item.spawn_egg.entity.feudal.cartographer.name=Spawn Royal Cartographer
+item.feudal:cartographer_spawn_egg.name=Spawn Royal Cartographer
+
+item.spawn_egg.entity.feudal:colonist.name=Spawn Pioneer Colonist
+item.spawn_egg.entity.feudal.colonist.name=Spawn Pioneer Colonist
+item.feudal:colonist_spawn_egg.name=Spawn Pioneer Colonist
+
+item.spawn_egg.entity.feudal:ballista.name=Spawn Defensive Ballista
+item.spawn_egg.entity.feudal.ballista.name=Spawn Defensive Ballista
+item.feudal:ballista_spawn_egg.name=Spawn Defensive Ballista
+
+item.spawn_egg.entity.feudal:catapult.name=Spawn Siege Catapult
+item.spawn_egg.entity.feudal.catapult.name=Spawn Siege Catapult
+item.feudal:catapult_spawn_egg.name=Spawn Siege Catapult
+
+item.spawn_egg.entity.feudal:siege_ram.name=Spawn Siege Battering Ram
+item.spawn_egg.entity.feudal.siege_ram.name=Spawn Siege Battering Ram
+item.feudal:siege_ram_spawn_egg.name=Spawn Siege Battering Ram
+
+item.spawn_egg.entity.feudal:feudal_ruler.name=Spawn Feudal Ruler
+item.spawn_egg.entity.feudal.feudal_ruler.name=Spawn Feudal Ruler
+item.feudal:feudal_ruler_spawn_egg.name=Spawn Feudal Ruler
+
 action.interact.talk=Talk

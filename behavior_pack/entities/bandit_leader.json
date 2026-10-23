@@ -5,11 +5,20 @@
       "identifier": "feudal:bandit_leader",
       "is_spawnable": true,
       "is_summonable": true,
-      "is_experimental": false
+      "is_experimental": false,
+      "spawn_egg": {
+        "base_color": "#0f172a",
+        "overlay_color": "#dc2626"
+      }
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["feudal", "bandit", "monster", "mob"]
+        "family": [
+          "feudal",
+          "bandit",
+          "monster",
+          "mob"
+        ]
       },
       "minecraft:health": {
         "value": 60,

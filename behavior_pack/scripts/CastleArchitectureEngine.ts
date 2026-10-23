@@ -365,6 +365,41 @@ export class CastleArchitectureEngine {
       bp.push({ relX: dx, relY: 3, relZ: -21, blockType: "minecraft:stone_bricks" });
     }
 
+    // GRAND CATHEDRAL ROOF & VAULTED CEILING ON THE DONJON PALACE (48x48)
+    // 1. Vaulted Stone Ceiling at y = palH
+    for (let x = -palR; x <= palR; x++) {
+      for (let z = -palR; z <= palR; z++) {
+        const isSpireArea = (Math.abs(x) >= palR - 2 && Math.abs(z) >= palR - 2);
+        if (!isSpireArea) {
+          bp.push({ relX: x, relY: palH, relZ: z, blockType: "minecraft:stone_bricks" });
+        }
+      }
+    }
+
+    // 2. High Gabled Timber & Slate Roof (y = palH + 1 to palH + 5)
+    for (let layer = 1; layer <= 5; layer++) {
+      const rx = palR - (layer * 4);
+      if (rx < 3) break;
+      for (let z = -palR + 2; z <= palR - 2; z++) {
+        bp.push({ relX: -rx, relY: palH + layer, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        bp.push({ relX: rx, relY: palH + layer, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          if (layer === 5 || Math.abs(ix) <= 2) {
+            bp.push({ relX: ix, relY: palH + layer, relZ: z, blockType: "minecraft:spruce_planks" });
+          }
+        }
+      }
+    }
+
+    // 3. Central Golden Imperial Lantern Cupola & Dome (x: -3..3, z: -3..3, y = palH + 6..palH + 8)
+    for (let cx = -3; cx <= 3; cx++) {
+      for (let cz = -3; cz <= 3; cz++) {
+        bp.push({ relX: cx, relY: palH + 6, relZ: cz, blockType: "minecraft:glass" });
+        bp.push({ relX: cx, relY: palH + 7, relZ: cz, blockType: "minecraft:gold_block" });
+      }
+    }
+    bp.push({ relX: 0, relY: palH + 8, relZ: 0, blockType: "minecraft:sea_lantern" });
+
     return bp;
   }
 
@@ -416,6 +451,34 @@ export class CastleArchitectureEngine {
       bp.push({ relX: 1, relY: 1, relZ: z, blockType: "minecraft:yellow_carpet" });
     }
 
+    // Complete Roof & Battlements for Ducal Citadel
+    for (let x = -r; x <= r; x++) {
+      for (let z = -r; z <= r; z++) {
+        // Vaulted stone ceiling
+        bp.push({ relX: x, relY: h, relZ: z, blockType: "minecraft:stone_bricks" });
+        // Outer crenellations
+        if (x === -r || x === r || z === -r || z === r) {
+          if ((x + z) % 2 === 0) {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:stone_bricks" });
+            bp.push({ relX: x, relY: h + 2, relZ: z, blockType: "minecraft:stone_brick_slab" });
+          } else {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:cobblestone_wall" });
+          }
+        }
+      }
+    }
+    // High central pitched roof
+    for (let step = 1; step <= 4; step++) {
+      const rx = (r - 2) - step * 2;
+      for (let z = -r + 2; z <= r - 2; z++) {
+        bp.push({ relX: -rx, relY: h + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        bp.push({ relX: rx, relY: h + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          bp.push({ relX: ix, relY: h + step, relZ: z, blockType: "minecraft:spruce_planks" });
+        }
+      }
+    }
+
     return bp;
   }
 
@@ -450,6 +513,31 @@ export class CastleArchitectureEngine {
       bp.push({ relX: 0, relY: 1, relZ: z, blockType: "minecraft:red_carpet" });
     }
 
+    // Complete Roof & Battlements for Baron Keep
+    for (let x = -r; x <= r; x++) {
+      for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: h, relZ: z, blockType: "minecraft:spruce_planks" });
+        if (x === -r || x === r || z === -r || z === r) {
+          if ((x + z) % 2 === 0) {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:stone_bricks" });
+          } else {
+            bp.push({ relX: x, relY: h + 1, relZ: z, blockType: "minecraft:spruce_fence" });
+          }
+        }
+      }
+    }
+    // Conical central watchtower roof
+    for (let ty = 1; ty <= 3; ty++) {
+      const cr = 5 - ty;
+      for (let cx = -cr; cx <= cr; cx++) {
+        for (let cz = -cr; cz <= cr; cz++) {
+          bp.push({ relX: cx, relY: h + ty, relZ: cz, blockType: "minecraft:dark_oak_stairs" });
+        }
+      }
+    }
+    bp.push({ relX: 0, relY: h + 4, relZ: 0, blockType: "minecraft:gold_block" });
+    bp.push({ relX: 0, relY: h + 5, relZ: 0, blockType: "minecraft:lantern" });
+
     return bp;
   }
 
@@ -458,6 +546,7 @@ export class CastleArchitectureEngine {
     const r = 6;
     for (let x = -r; x <= r; x++) {
       for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: -1, relZ: z, blockType: "minecraft:cobblestone" });
         bp.push({ relX: x, relY: 0, relZ: z, blockType: "minecraft:stone_bricks" });
       }
     }
@@ -473,6 +562,34 @@ export class CastleArchitectureEngine {
     }
     bp.push({ relX: 0, relY: 1, relZ: -3, blockType: "minecraft:chiseled_stone_bricks" });
     bp.push({ relX: 0, relY: 2, relZ: -3, blockType: "feudal:throne" });
+
+    // Complete Pitched Gabled Roof with Eaves
+    for (let x = -r; x <= r; x++) {
+      for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: 6, relZ: z, blockType: "minecraft:spruce_planks" });
+      }
+    }
+    for (let step = 0; step <= 3; step++) {
+      const rx = (r + 1) - step * 2;
+      for (let z = -r - 1; z <= r + 1; z++) {
+        bp.push({ relX: -rx, relY: 7 + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        bp.push({ relX: rx, relY: 7 + step, relZ: z, blockType: "minecraft:dark_oak_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          bp.push({ relX: ix, relY: 7 + step, relZ: z, blockType: "minecraft:spruce_planks" });
+        }
+      }
+    }
+    // Chimney & Smoke
+    for (let cy = 7; cy <= 12; cy++) {
+      bp.push({ relX: 4, relY: cy, relZ: -3, blockType: "minecraft:stone_bricks" });
+    }
+    bp.push({ relX: 4, relY: 13, relZ: -3, blockType: "minecraft:campfire" });
+    bp.push({ relX: 4, relY: 14, relZ: -3, blockType: "minecraft:cobblestone_wall" });
+
+    // Interior chandelier
+    bp.push({ relX: 0, relY: 5, relZ: 0, blockType: "minecraft:spruce_fence" });
+    bp.push({ relX: 0, relY: 4, relZ: 0, blockType: "minecraft:lantern" });
+
     return bp;
   }
 
@@ -481,6 +598,7 @@ export class CastleArchitectureEngine {
     const r = 4;
     for (let x = -r; x <= r; x++) {
       for (let z = -r; z <= r; z++) {
+        bp.push({ relX: x, relY: -1, relZ: z, blockType: "minecraft:cobblestone" });
         bp.push({ relX: x, relY: 0, relZ: z, blockType: "minecraft:spruce_planks" });
       }
     }
@@ -495,6 +613,24 @@ export class CastleArchitectureEngine {
       }
     }
     bp.push({ relX: 0, relY: 1, relZ: -2, blockType: "feudal:throne" });
+
+    // Complete A-frame timber roof
+    for (let step = 0; step <= 2; step++) {
+      const rx = (r + 1) - step * 2;
+      for (let z = -r - 1; z <= r + 1; z++) {
+        bp.push({ relX: -rx, relY: 5 + step, relZ: z, blockType: "minecraft:spruce_stairs" });
+        bp.push({ relX: rx, relY: 5 + step, relZ: z, blockType: "minecraft:spruce_stairs" });
+        for (let ix = -rx + 1; ix < rx; ix++) {
+          bp.push({ relX: ix, relY: 5 + step, relZ: z, blockType: "minecraft:spruce_planks" });
+        }
+      }
+    }
+    // Ridge cap
+    for (let z = -r - 1; z <= r + 1; z++) {
+      bp.push({ relX: 0, relY: 8, relZ: z, blockType: "minecraft:spruce_slab" });
+    }
+    bp.push({ relX: 0, relY: 4, relZ: 0, blockType: "minecraft:lantern" });
+
     return bp;
   }
 

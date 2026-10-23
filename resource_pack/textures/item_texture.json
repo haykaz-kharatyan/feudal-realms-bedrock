@@ -13,6 +13,18 @@
     },
     "feudal_commander_banner": {
       "textures": "textures/items/commander_banner"
+    },
+    "feudal_throne": {
+      "textures": "textures/items/throne_icon"
+    },
+    "feudal:throne": {
+      "textures": "textures/items/throne_icon"
+    },
+    "feudal_boundary_stone": {
+      "textures": "textures/items/boundary_stone_icon"
+    },
+    "feudal:boundary_stone": {
+      "textures": "textures/items/boundary_stone_icon"
     }
   }
 }

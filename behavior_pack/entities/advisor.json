@@ -5,11 +5,21 @@
       "identifier": "feudal:advisor",
       "is_spawnable": true,
       "is_summonable": true,
-      "is_experimental": false
+      "is_experimental": false,
+      "spawn_egg": {
+        "base_color": "#1e3a8a",
+        "overlay_color": "#facc15"
+      }
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["feudal", "advisor", "villager", "npc", "mob"]
+        "family": [
+          "feudal",
+          "advisor",
+          "villager",
+          "npc",
+          "mob"
+        ]
       },
       "minecraft:health": {
         "value": 20,
@@ -61,7 +71,7 @@
       },
       "minecraft:behavior.look_at_player": {
         "priority": 1,
-        "look_distance": 8.0,
+        "look_distance": 8,
         "probability": 0.05
       },
       "minecraft:behavior.random_look_around": {

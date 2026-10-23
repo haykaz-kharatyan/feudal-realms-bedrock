@@ -1,4 +1,4 @@
-import { world, system, EntityDamageSource } from "@minecraft/server";
+import { world, system, EntityDamageSource, ItemStack } from "@minecraft/server";
 import { AdvisorUI } from "./AdvisorUI";
 import { SettlementData, CityTier } from "./CityProgression";
 import { LogisticsCaravanManager } from "./LogisticsCaravan";
@@ -13,6 +13,8 @@ import { PlayerRPGProfile } from "./PlayerRPGProfile";
 import { AllianceSystem } from "./AllianceSystem";
 import { SquadTacticsEngine } from "./SquadTacticsEngine";
 import { MarketplaceEngine } from "./MarketplaceEngine";
+import { HUDCompass } from "./HUDCompass";
+import { NaturalKingdomSpawner } from "./NaturalKingdomSpawner";
 
 // Initialize the persistent virtual world engine and military alliances
 VirtualWorldEngine.initializeDefaultRealms();
@@ -71,6 +73,18 @@ system.runInterval(() => {
     PlayerRPGProfile.applyHealthAndPassives(player);
   }
 }, 200);
+
+// 9. Real-time HUD Compass & Actionbar mini-map under hearts (every 1s)
+system.runInterval(() => {
+  HUDCompass.tick(activeSettlements);
+}, 20);
+
+// 10. Natural Kingdom Spawner: Automatically creates living kingdom with Throne & Advisor near players (every 3s)
+system.runInterval(() => {
+  for (const player of world.getPlayers()) {
+    NaturalKingdomSpawner.checkAndSpawnNaturalKingdom(player, activeSettlements);
+  }
+}, 60);
 
 // Handle Item Use: Realm Map, War Horn, and Commander's Banner
 world.afterEvents.itemUse.subscribe((event) => {
@@ -196,13 +210,35 @@ world.afterEvents.entityDie.subscribe((event) => {
   PlayerRPGProfile.handleEntityKill(event);
 });
 
-// 10. Refresh health and skills when player spawns/respawns
+// 10. Refresh health and skills, and grant starter Realm Map when player spawns
 const playerSpawnEvent = (world.afterEvents as any).playerSpawn;
 if (playerSpawnEvent) {
   playerSpawnEvent.subscribe((event: any) => {
-    if (event.player) {
+    const player = event.player;
+    if (player) {
       system.runTimeout(() => {
-        PlayerRPGProfile.applyHealthAndPassives(event.player);
+        PlayerRPGProfile.applyHealthAndPassives(player);
+
+        // Grant Atlas of the Realms to the player if they don't have one
+        try {
+          const inv = player.getComponent("inventory")?.container;
+          if (inv) {
+            let hasMap = false;
+            for (let i = 0; i < inv.size; i++) {
+              const item = inv.getItem(i);
+              if (item?.typeId === "feudal:realm_map") {
+                hasMap = true;
+                break;
+              }
+            }
+            if (!hasMap) {
+              inv.addItem(new ItemStack("feudal:realm_map", 1));
+              player.sendMessage(
+                "§6§l[КОРОЛЕВСКИЙ КАРТОГРАФ]§r §eВам дарован Атлас Королевств! Следите за компасом на экране — он указывает путь к ближайшему замку!§r"
+              );
+            }
+          }
+        } catch {}
       }, 20);
     }
   });

@@ -8,10 +8,14 @@
       }
     },
     "components": {
-      "minecraft:icon": "feudal_commander_banner",
+      "minecraft:icon": {
+        "textures": {
+          "default": "feudal_commander_banner"
+        }
+      },
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.feudal.commander_banner.name"
+        "value": "item.feudal:commander_banner.name"
       },
       "minecraft:hand_equipped": true
     }

@@ -5,20 +5,47 @@
       "identifier": "feudal:siege_ram",
       "is_spawnable": true,
       "is_summonable": true,
-      "is_experimental": false
+      "is_experimental": false,
+      "spawn_egg": {
+        "base_color": "#365314",
+        "overlay_color": "#d97706"
+      }
     },
     "components": {
       "minecraft:type_family": {
-        "family": ["feudal", "siege", "inanimate"]
+        "family": [
+          "feudal",
+          "siege",
+          "inanimate"
+        ]
       },
-      "minecraft:health": { "value": 100, "max": 100 },
-      "minecraft:damage_sensor": { "triggers": { "cause": "all", "deals_damage": true } },
-      "minecraft:collision_box": { "width": 2.0, "height": 2.2 },
-      "minecraft:movement": { "value": 0.15 },
-      "minecraft:navigation.walk": { "can_path_over_water": false, "avoid_water": true },
+      "minecraft:health": {
+        "value": 100,
+        "max": 100
+      },
+      "minecraft:damage_sensor": {
+        "triggers": {
+          "cause": "all",
+          "deals_damage": true
+        }
+      },
+      "minecraft:collision_box": {
+        "width": 2,
+        "height": 2.2
+      },
+      "minecraft:movement": {
+        "value": 0.15
+      },
+      "minecraft:navigation.walk": {
+        "can_path_over_water": false,
+        "avoid_water": true
+      },
       "minecraft:movement.basic": {},
       "minecraft:physics": {},
-      "minecraft:pushable": { "is_pushable": true, "is_pushable_by_piston": true }
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      }
     }
   }
 }

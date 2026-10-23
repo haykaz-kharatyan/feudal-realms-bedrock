@@ -1,11 +1,17 @@
 item.feudal:bandit_head.name=Трофейная голова атамана
+item.feudal.bandit_head.name=Трофейная голова атамана
 item.feudal:realm_map.name=Атлас королевств
+item.feudal.realm_map.name=Атлас королевств
 item.feudal:war_horn.name=Боевой рог
+item.feudal.war_horn.name=Боевой рог
 item.feudal:commander_banner.name=Знамя Полководца
 item.feudal.commander_banner.name=Знамя Полководца
-item.feudal.war_horn.name=Боевой рог
-tile.feudal:throne.name=Трон поселения
+
+tile.feudal:throne.name=Королевский Трон
+tile.feudal.throne.name=Королевский Трон
 tile.feudal:boundary_stone.name=Пограничный межевой камень
+tile.feudal.boundary_stone.name=Пограничный межевой камень
+
 entity.feudal:advisor.name=Королевский советник
 entity.feudal:city_guard.name=Городской страж
 entity.feudal:bandit_leader.name=Главарь разбойников
@@ -22,4 +28,70 @@ entity.feudal:siege_ram.name=Осадный таран
 entity.feudal:ballista.name=Оборонительная баллиста
 entity.feudal:catapult.name=Осадная катапульта
 entity.feudal:royal_knight.name=Королевский рыцарь-гвардеец
+
+item.spawn_egg.entity.feudal:advisor.name=Создать: Королевский советник
+item.spawn_egg.entity.feudal.advisor.name=Создать: Королевский советник
+item.feudal:advisor_spawn_egg.name=Создать: Королевский советник
+
+item.spawn_egg.entity.feudal:royal_knight.name=Создать: Королевский рыцарь
+item.spawn_egg.entity.feudal.royal_knight.name=Создать: Королевский рыцарь
+item.feudal:royal_knight_spawn_egg.name=Создать: Королевский рыцарь
+
+item.spawn_egg.entity.feudal:city_guard.name=Создать: Городской страж
+item.spawn_egg.entity.feudal.city_guard.name=Создать: Городской страж
+item.feudal:city_guard_spawn_egg.name=Создать: Городской страж
+
+item.spawn_egg.entity.feudal:bandit_leader.name=Создать: Главарь разбойников
+item.spawn_egg.entity.feudal.bandit_leader.name=Создать: Главарь разбойников
+item.feudal:bandit_leader_spawn_egg.name=Создать: Главарь разбойников
+
+item.spawn_egg.entity.feudal:miner.name=Создать: Шахтёр
+item.spawn_egg.entity.feudal.miner.name=Создать: Шахтёр
+item.feudal:miner_spawn_egg.name=Создать: Шахтёр
+
+item.spawn_egg.entity.feudal:lumberjack.name=Создать: Лесоруб
+item.spawn_egg.entity.feudal.lumberjack.name=Создать: Лесоруб
+item.feudal:lumberjack_spawn_egg.name=Создать: Лесоруб
+
+item.spawn_egg.entity.feudal:blacksmith.name=Создать: Кузнец
+item.spawn_egg.entity.feudal.blacksmith.name=Создать: Кузнец
+item.feudal:blacksmith_spawn_egg.name=Создать: Кузнец
+
+item.spawn_egg.entity.feudal:merchant.name=Создать: Торговец
+item.spawn_egg.entity.feudal.merchant.name=Создать: Торговец
+item.feudal:merchant_spawn_egg.name=Создать: Торговец
+
+item.spawn_egg.entity.feudal:farmer.name=Создать: Фермер
+item.spawn_egg.entity.feudal.farmer.name=Создать: Фермер
+item.feudal:farmer_spawn_egg.name=Создать: Фермер
+
+item.spawn_egg.entity.feudal:lamplighter.name=Создать: Фонарщик
+item.spawn_egg.entity.feudal.lamplighter.name=Создать: Фонарщик
+item.feudal:lamplighter_spawn_egg.name=Создать: Фонарщик
+
+item.spawn_egg.entity.feudal:cartographer.name=Создать: Королевский картограф
+item.spawn_egg.entity.feudal.cartographer.name=Создать: Королевский картограф
+item.feudal:cartographer_spawn_egg.name=Создать: Королевский картограф
+
+item.spawn_egg.entity.feudal:colonist.name=Создать: Колонист
+item.spawn_egg.entity.feudal.colonist.name=Создать: Колонист
+item.feudal:colonist_spawn_egg.name=Создать: Колонист
+
+item.spawn_egg.entity.feudal:ballista.name=Создать: Оборонительная баллиста
+item.spawn_egg.entity.feudal.ballista.name=Создать: Оборонительная баллиста
+item.feudal:ballista_spawn_egg.name=Создать: Оборонительная баллиста
+
+item.spawn_egg.entity.feudal:catapult.name=Создать: Осадная катапульта
+item.spawn_egg.entity.feudal.catapult.name=Создать: Осадная катапульта
+item.feudal:catapult_spawn_egg.name=Создать: Осадная катапульта
+
+item.spawn_egg.entity.feudal:siege_ram.name=Создать: Осадный таран
+item.spawn_egg.entity.feudal.siege_ram.name=Создать: Осадный таран
+item.feudal:siege_ram_spawn_egg.name=Создать: Осадный таран
+
+item.spawn_egg.entity.feudal:feudal_ruler.name=Создать: Феодальный правитель
+item.spawn_egg.entity.feudal.feudal_ruler.name=Создать: Феодальный правитель
+item.feudal:feudal_ruler_spawn_egg.name=Создать: Феодальный правитель
+
 action.interact.talk=Поговорить
+

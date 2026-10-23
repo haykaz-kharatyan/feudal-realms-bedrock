@@ -8,10 +8,14 @@
       }
     },
     "components": {
-      "minecraft:icon": "feudal_war_horn",
+      "minecraft:icon": {
+        "textures": {
+          "default": "feudal_war_horn"
+        }
+      },
       "minecraft:max_stack_size": 1,
       "minecraft:display_name": {
-        "value": "item.feudal.war_horn.name"
+        "value": "item.feudal:war_horn.name"
       },
       "minecraft:hand_equipped": true
     }
